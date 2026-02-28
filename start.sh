@@ -11,7 +11,7 @@ sleep 20
 
 # Step 2: Start Rasa Server in background
 echo "[2/3] Starting Rasa Server on port 5005..."
-cd /app && rasa run --enable-api --cors "*" --port 5005 --endpoints /app/endpoints.yml &
+cd /app && rasa run --enable-api --cors "*" --port 5005 --endpoints /app/endpoints.yml --model /app/models &
 
 # Wait until Rasa server is fully ready (loads TensorFlow model - takes 1-2 min)
 echo "Waiting for Rasa to load model..."
