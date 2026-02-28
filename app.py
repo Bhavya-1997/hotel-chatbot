@@ -6,6 +6,8 @@ import uuid
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-change-this'  # Change this to a secure random key
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'   # Required for HF Spaces iframe
+app.config['SESSION_COOKIE_SECURE'] = True        # Required when SameSite=None
 
 # Rasa server URL
 RASA_URL = "http://localhost:5005/webhooks/rest/webhook"
