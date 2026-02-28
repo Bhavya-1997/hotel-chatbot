@@ -13,6 +13,9 @@ RUN pip install flask==2.3.3 gunicorn==21.2.0 werkzeug==3.1.3
 # Copy all project files
 COPY . /app/
 
+# Retrain the model inside this container to fix OS/Python compatibility issues
+RUN cd /app && rasa train --out /app/models/
+
 RUN chmod +x /app/start.sh
 
 # Override the rasa base image entrypoint so we can run our own startup script
