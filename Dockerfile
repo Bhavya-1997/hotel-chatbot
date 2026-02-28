@@ -15,6 +15,9 @@ COPY . /app/
 
 RUN chmod +x /app/start.sh
 
+# Override the rasa base image entrypoint so we can run our own startup script
+ENTRYPOINT []
+
 # Hugging Face Spaces requires port 7860
 EXPOSE 7860
 
