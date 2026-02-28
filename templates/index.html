@@ -508,6 +508,15 @@
         const sendButton = document.getElementById('sendButton');
         const typingIndicator = document.getElementById('typingIndicator');
 
+        function getSessionUserId() {
+            let userId = sessionStorage.getItem('chat_user_id');
+            if (!userId) {
+                userId = 'user_' + Math.random().toString(36).substr(2, 8);
+                sessionStorage.setItem('chat_user_id', userId);
+            }
+            return userId;
+        }
+
         function addMessage(message, isUser = false, messageType = 'text', bookingData = null) {
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message');
@@ -639,7 +648,7 @@
                     },
                     body: JSON.stringify({
                         message: message,
-                        sender: 'user_' + Date.now()
+                        user_id: getSessionUserId()
                     })
                 });
 
@@ -668,6 +677,7 @@
         }
 
         async function resetConversation() {
+            sessionStorage.removeItem('chat_user_id');
             try {
                 const response = await fetch('/reset', {
                     method: 'POST',

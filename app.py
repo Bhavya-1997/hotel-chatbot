@@ -43,11 +43,12 @@ def chat():
     try:
         user_message = request.json.get('message', '')
         
-        # Use consistent user ID from session
-        if 'user_id' not in session:
-            session['user_id'] = f"user_{uuid.uuid4().hex[:8]}"
-        
-        user_id = session['user_id']
+        # Use client-provided user_id first (works in incognito/iframe), fall back to Flask session
+        user_id = request.json.get('user_id')
+        if not user_id:
+            if 'user_id' not in session:
+                session['user_id'] = f"user_{uuid.uuid4().hex[:8]}"
+            user_id = session['user_id']
         
         print(f"DEBUG WEB: User {user_id} sent: '{user_message}'")
         
